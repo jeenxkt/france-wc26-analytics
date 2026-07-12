@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>World Cup 2026 - Champion Predictor</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
+.db{font-family:'Inter',sans-serif;background:#071428;padding:20px;border-radius:16px;max-width:1200px;margin:0 auto}
+
+.hero{border-radius:14px;padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;background:#0a1e45;text-align:center}
+.hero-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:#ED2939;border-radius:50%;opacity:.15;filter:blur(70px)}
+.hero-tag{position:relative;font-size:10px;font-weight:700;color:#4a7fd4;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px}
+.hero-title{position:relative;font-family:'Bebas Neue',sans-serif;font-size:52px;color:#fff;letter-spacing:3px;line-height:1}
+.hero-sub{position:relative;font-size:12px;color:#ffffff77;margin-top:10px}
+
+.sec{font-size:13px;font-weight:900;color:#6ab0ff;letter-spacing:2.5px;text-transform:uppercase;margin:32px 0 14px;display:flex;align-items:center;gap:10px;text-shadow:0 0 14px rgba(106,176,255,.35)}
+.sec::before{content:'';width:18px;height:2px;background:#ED2939;border-radius:1px;flex-shrink:0}
+.sec::after{content:'';flex:1;height:1px;background:#ffffff08}
+
+/* BRACKET */
+.bracket{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sf-card{background:#0d1f3c;border:1px solid #1a3260;border-radius:14px;padding:18px}
+.sf-label{font-size:10px;font-weight:700;color:#6a8fc0;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.sf-teams{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sf-team{text-align:center;flex:1}
+.sf-team .name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px}
+.sf-team .pct{font-size:20px;font-weight:800;margin-top:2px}
+.sf-vs{font-size:11px;color:#3a5a8a;font-weight:700;padding:0 10px}
+.sf-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#050e1f}
+.sf-fill{height:100%}
+.final-card{grid-column:1 / -1;background:linear-gradient(135deg,#0d1f3c,#1a1030);border:1px solid #3a2060;border-radius:14px;padding:18px;text-align:center;margin-top:4px}
+.final-label{font-size:10px;font-weight:700;color:#c99aff;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.final-note{font-size:11px;color:#6a8fc0;margin-top:8px}
+
+/* CHAMPION BARS */
+.champ-grid{display:flex;flex-direction:column;gap:12px}
+.champ-row{display:flex;align-items:center;gap:14px}
+.champ-flag{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:15px;color:#fff;flex-shrink:0}
+.champ-info{flex:1}
+.champ-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px;display:flex;justify-content:space-between}
+.champ-track{background:#050e1f;border-radius:7px;height:22px;overflow:hidden}
+.champ-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:10px}
+.champ-fill span{font-size:11px;font-weight:800;color:#fff}
+
+/* TEAM CARDS */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.team-card{background:#0d1f3c;border:1px solid #1a3260;border-top:3px solid var(--tc);border-radius:12px;padding:16px}
+.team-card .tname{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:1px}
+.team-card .tsub{font-size:9.5px;color:#6a8fc0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.stat-row{display:flex;justify-content:space-between;font-size:11px;color:#c8d4e8;padding:5px 0;border-top:1px solid #16294d}
+.stat-row b{color:#fff}
+.overp{font-size:9.5px;margin-top:8px;padding:6px 8px;border-radius:6px;background:#050e1f}
+
+/* MATCH XG STRIP */
+.match-list{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.match-row{display:flex;align-items:center;gap:10px}
+.m-opp{width:88px;flex-shrink:0;font-size:11px;color:#c8d4e8;font-weight:500}
+.m-track{flex:1;background:#050e1f;border-radius:5px;height:16px;overflow:hidden}
+.m-fill{height:100%;border-radius:5px}
+.m-val{width:34px;flex-shrink:0;text-align:right;font-size:11px;font-weight:800;color:#fff}
+.m-avg{margin-top:12px;padding-top:10px;border-top:1px solid #16294d;font-size:10px;color:#4a7fd4;font-weight:700;text-align:right}
+
+.methodology{background:#0d1f3c;border:1px solid #1a3260;border-radius:12px;padding:18px;font-size:11px;color:#8aa9cf;line-height:1.7}
+.methodology b{color:#c8d4e8}
+
+/* PATH TO FINAL */
+.path-team{margin-bottom:22px}
+.path-team:last-child{margin-bottom:0}
+.path-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.path-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.path-name{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;color:#fff}
+.path-record{font-size:10px;color:#5c7ba8;margin-left:2px}
+.path-track{display:flex;align-items:center}
+.path-stage{flex:1;position:relative;text-align:center}
+.path-stage:not(:last-child)::after{content:'';position:absolute;top:15px;left:50%;width:100%;height:2px;background:#16294d;z-index:1}
+.path-node{position:relative;z-index:2;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:9px;font-weight:800;color:#fff;border:2px solid #071428}
+.path-score{font-size:11px;font-weight:800;color:#fff}
+.path-opp{font-size:8.5px;color:#5c7ba8;margin-top:1px}
+.path-stagelabel{font-size:7.5px;color:#3a5a8a;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.path-note{font-size:10.5px;color:#8aa9cf;margin-top:10px;padding-left:2px;font-style:italic}
+.path-node.pending{background:transparent!important;border:2px dashed;box-shadow:none}
+.path-node.qf-glow{box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+.path-stage.upcoming .path-stagelabel{color:#c99aff}
+.path-pct{font-size:11px;font-weight:800}
+.path-opp.upcoming{color:#c99aff;font-weight:600}
+.updated-tag{display:inline-block;background:#ED2939;color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:3px;letter-spacing:.8px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="db">
+
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-tag">FIFA World Cup 2026 · Semifinals confirmed</div>
+    <div class="hero-title">Who Wins It All?</div>
+    <div class="hero-sub">Monte Carlo simulation across all 4 remaining teams · 10,000 iterations per matchup</div>
+  </div>
+
+  <div class="sec">The Bracket</div>
+  <div class="bracket">
+    <div class="sf-card">
+      <div class="sf-label">Semi Final 1 · Jul 14</div>
+      <div class="sf-teams">
+        <div class="sf-team"><div class="name" style="color:#ED2939">France</div><div class="pct" style="color:#ED2939">51.1%</div></div>
+        <div class="sf-vs">VS</div>
+        <div class="sf-team"><div class="name" style="color:#c99a2e">Spain</div><div class="pct" style="color:#c99a2e">48.9%</div></div>
+      </div>
+      <div class="sf-bar"><div class="sf-fill" style="width:51.1%;background:#ED2939"></div><div class="sf-fill" style="width:48.9%;background:#c99a2e"></div></div>
+    </div>
+    <div class="sf-card">
+      <div class="sf-label">Semi Final 2 · Jul 15</div>
+      <div class="sf-teams">
+        <div class="sf-team"><div class="name" style="color:#3d7fe0">England</div><div class="pct" style="color:#3d7fe0">43.8%</div></div>
+        <div class="sf-vs">VS</div>
+        <div class="sf-team"><div class="name" style="color:#5aa8d6">Argentina</div><div class="pct" style="color:#5aa8d6">56.2%</div></div>
+      </div>
+      <div class="sf-bar"><div class="sf-fill" style="width:43.8%;background:#3d7fe0"></div><div class="sf-fill" style="width:56.2%;background:#5aa8d6"></div></div>
+    </div>
+    <div class="final-card">
+      <div class="final-label">Final · Jul 19</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;letter-spacing:1px">Winner of SF1 <span style="color:#c99aff">vs</span> Winner of SF2</div>
+      <div class="final-note">France's win probability in the Final varies by opponent: 58.8% vs England, 51.9% vs Argentina - weighted average 54.9%</div>
+    </div>
+  </div>
+
+  <div class="sec">Champion Probability <span class="updated-tag">updated</span></div>
+  <div class="champ-grid">
+    <div class="champ-row">
+      <div class="champ-flag" style="--tc:#ED2939;background:#ED2939">FRA</div>
+      <div class="champ-info">
+        <div class="champ-name"><span>France</span><span>28.1%</span></div>
+        <div class="champ-track"><div class="champ-fill" style="width:28.1%;background:#ED2939"><span>28.1%</span></div></div>
+      </div>
+    </div>
+    <div class="champ-row">
+      <div class="champ-flag" style="--tc:#5aa8d6;background:#5aa8d6">ARG</div>
+      <div class="champ-info">
+        <div class="champ-name"><span>Argentina</span><span>27.2%</span></div>
+        <div class="champ-track"><div class="champ-fill" style="width:27.2%;background:#5aa8d6"><span>27.2%</span></div></div>
+      </div>
+    </div>
+    <div class="champ-row">
+      <div class="champ-flag" style="--tc:#c99a2e;background:#c99a2e">ESP</div>
+      <div class="champ-info">
+        <div class="champ-name"><span>Spain</span><span>26.3%</span></div>
+        <div class="champ-track"><div class="champ-fill" style="width:26.3%;background:#c99a2e"><span>26.3%</span></div></div>
+      </div>
+    </div>
+    <div class="champ-row">
+      <div class="champ-flag" style="--tc:#3d7fe0;background:#3d7fe0">ENG</div>
+      <div class="champ-info">
+        <div class="champ-name"><span>England</span><span>18.4%</span></div>
+        <div class="champ-track"><div class="champ-fill" style="width:18.4%;background:#3d7fe0"><span>18.4%</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">Team Form - 6 Tournament Matches</div>
+  <div class="team-grid">
+    <div class="team-card" style="--tc:#ED2939">
+      <div class="tname">France</div>
+      <div class="tsub">6-0-0 · Semifinalist</div>
+      <div class="stat-row"><span>xG scored/game</span><b>2.39</b></div>
+      <div class="stat-row"><span>xG conceded/game</span><b>0.64</b></div>
+      <div class="stat-row"><span>Goals actual</span><b>16 (14.34 xG)</b></div>
+      <div class="overp" style="color:#4fd18a">+1.66 goals vs xG - clinical finishing</div>
+    </div>
+    <div class="team-card" style="--tc:#c99a2e">
+      <div class="tname">Spain</div>
+      <div class="tsub">5-1-0 · Semifinalist</div>
+      <div class="stat-row"><span>xG scored/game</span><b>1.95</b></div>
+      <div class="stat-row"><span>xG conceded/game</span><b>0.31</b></div>
+      <div class="stat-row"><span>Goals actual</span><b>11 (11.71 xG)</b></div>
+      <div class="overp" style="color:#ff8a8a">-0.71 goals vs xG - creating more than scoring</div>
+    </div>
+    <div class="team-card" style="--tc:#5aa8d6">
+      <div class="tname">Argentina</div>
+      <div class="tsub">6-0-0 · Semifinalist</div>
+      <div class="stat-row"><span>xG scored/game</span><b>2.13</b></div>
+      <div class="stat-row"><span>xG conceded/game</span><b>0.57</b></div>
+      <div class="stat-row"><span>Goals actual</span><b>18 (12.79 xG)</b></div>
+      <div class="overp" style="color:#4fd18a">+5.21 goals vs xG - Messi & co. overperforming</div>
+    </div>
+    <div class="team-card" style="--tc:#3d7fe0">
+      <div class="tname">England</div>
+      <div class="tsub">5-1-0 · Semifinalist</div>
+      <div class="stat-row"><span>xG scored/game</span><b>1.82</b></div>
+      <div class="stat-row"><span>xG conceded/game</span><b>0.81</b></div>
+      <div class="stat-row"><span>Goals actual</span><b>13 (10.93 xG)</b></div>
+      <div class="overp" style="color:#4fd18a">+2.07 goals vs xG - Bellingham inspired</div>
+    </div>
+  </div>
+
+  <div class="sec">Path to the Final</div>
+  <div class="team-card" style="border-top:3px solid #4a7fd4;padding:22px">
+
+    <div class="path-team">
+      <div class="path-head"><div class="path-dot" style="background:#ED2939"></div><div class="path-name">France</div><div class="path-record">6 wins, 0 losses</div></div>
+      <div class="path-track">
+        <div class="path-stage"><div class="path-stagelabel">Group 1</div><div class="path-node" style="background:#ED2939">W</div><div class="path-score">3-1</div><div class="path-opp">Senegal</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 2</div><div class="path-node" style="background:#ED2939">W</div><div class="path-score">3-0</div><div class="path-opp">Iraq</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 3</div><div class="path-node" style="background:#ED2939">W</div><div class="path-score">4-1</div><div class="path-opp">Norway</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R32</div><div class="path-node" style="background:#ED2939">W</div><div class="path-score">3-0</div><div class="path-opp">Sweden</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R16</div><div class="path-node" style="background:#ED2939">W</div><div class="path-score">1-0</div><div class="path-opp">Paraguay</div></div>
+        <div class="path-stage"><div class="path-stagelabel">QF</div><div class="path-node qf-glow" style="background:#ED2939">W</div><div class="path-score">2-0</div><div class="path-opp">Morocco</div></div>
+        <div class="path-stage upcoming"><div class="path-stagelabel">SF · Jul 14</div><div class="path-node pending" style="border-color:#ED2939;color:#ED2939">?</div><div class="path-pct" style="color:#ED2939">51.1%</div><div class="path-opp upcoming">vs Spain</div></div>
+      </div>
+      <div class="path-note">Perfect record, never trailed in a knockout match. Mbappe and Dembele have combined for 13 goals - the QF winner came from Dembele with Mbappe's assist.</div>
+    </div>
+
+    <div class="path-team">
+      <div class="path-head"><div class="path-dot" style="background:#c99a2e"></div><div class="path-name">Spain</div><div class="path-record">5 wins, 1 draw</div></div>
+      <div class="path-track">
+        <div class="path-stage"><div class="path-stagelabel">Group 1</div><div class="path-node" style="background:#c99a2e">W</div><div class="path-score">4-0</div><div class="path-opp">Saudi Arabia</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 2</div><div class="path-node" style="background:#3a5a8a">D</div><div class="path-score">0-0</div><div class="path-opp">Cape Verde</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 3</div><div class="path-node" style="background:#c99a2e">W</div><div class="path-score">3-0</div><div class="path-opp">Austria</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R32</div><div class="path-node" style="background:#c99a2e">W</div><div class="path-score">1-0</div><div class="path-opp">Uruguay</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R16</div><div class="path-node" style="background:#c99a2e">W</div><div class="path-score">1-0</div><div class="path-opp">Portugal</div></div>
+        <div class="path-stage"><div class="path-stagelabel">QF</div><div class="path-node qf-glow" style="background:#c99a2e">W</div><div class="path-score">2-1</div><div class="path-opp">Belgium</div></div>
+        <div class="path-stage upcoming"><div class="path-stagelabel">SF · Jul 14</div><div class="path-node pending" style="border-color:#c99a2e;color:#c99a2e">?</div><div class="path-pct" style="color:#c99a2e">48.9%</div><div class="path-opp upcoming">vs France</div></div>
+      </div>
+      <div class="path-note">The tournament's tightest defense - one clean sheet after another, only 2 goals conceded in 6 games. Have won every knockout match by a single goal.</div>
+    </div>
+
+    <div class="path-team">
+      <div class="path-head"><div class="path-dot" style="background:#5aa8d6"></div><div class="path-name">Argentina</div><div class="path-record">6 wins, 0 losses</div></div>
+      <div class="path-track">
+        <div class="path-stage"><div class="path-stagelabel">Group 1</div><div class="path-node" style="background:#5aa8d6">W</div><div class="path-score">3-0</div><div class="path-opp">Algeria</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 2</div><div class="path-node" style="background:#5aa8d6">W</div><div class="path-score">2-0</div><div class="path-opp">Austria</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 3</div><div class="path-node" style="background:#5aa8d6">W</div><div class="path-score">3-1</div><div class="path-opp">Jordan</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R32</div><div class="path-node" style="background:#5aa8d6">W</div><div class="path-score">3-2</div><div class="path-opp">Cape Verde (aet)</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R16</div><div class="path-node" style="background:#5aa8d6">W</div><div class="path-score">3-2</div><div class="path-opp">Egypt</div></div>
+        <div class="path-stage"><div class="path-stagelabel">QF</div><div class="path-node qf-glow" style="background:#5aa8d6">W</div><div class="path-score">3-1</div><div class="path-opp">Switzerland (aet)</div></div>
+        <div class="path-stage upcoming"><div class="path-stagelabel">SF · Jul 15</div><div class="path-node pending" style="border-color:#5aa8d6;color:#5aa8d6">?</div><div class="path-pct" style="color:#5aa8d6">56.2%</div><div class="path-opp upcoming">vs England</div></div>
+      </div>
+      <div class="path-note">Two extra-time knockout wins already - Messi has scored in every match he's played. The defense has looked shaky at times, but the team always finds a way through.</div>
+    </div>
+
+    <div class="path-team">
+      <div class="path-head"><div class="path-dot" style="background:#3d7fe0"></div><div class="path-name">England</div><div class="path-record">5 wins, 1 draw</div></div>
+      <div class="path-track">
+        <div class="path-stage"><div class="path-stagelabel">Group 1</div><div class="path-node" style="background:#3d7fe0">W</div><div class="path-score">4-2</div><div class="path-opp">Croatia</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 2</div><div class="path-node" style="background:#3a5a8a">D</div><div class="path-score">0-0</div><div class="path-opp">Ghana</div></div>
+        <div class="path-stage"><div class="path-stagelabel">Group 3</div><div class="path-node" style="background:#3d7fe0">W</div><div class="path-score">2-0</div><div class="path-opp">Panama</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R32</div><div class="path-node" style="background:#3d7fe0">W</div><div class="path-score">2-1</div><div class="path-opp">DR Congo</div></div>
+        <div class="path-stage"><div class="path-stagelabel">R16</div><div class="path-node" style="background:#3d7fe0">W</div><div class="path-score">3-2</div><div class="path-opp">Mexico</div></div>
+        <div class="path-stage"><div class="path-stagelabel">QF</div><div class="path-node qf-glow" style="background:#3d7fe0">W</div><div class="path-score">2-1</div><div class="path-opp">Norway (aet)</div></div>
+        <div class="path-stage upcoming"><div class="path-stagelabel">SF · Jul 15</div><div class="path-node pending" style="border-color:#3d7fe0;color:#3d7fe0">?</div><div class="path-pct" style="color:#3d7fe0">43.8%</div><div class="path-opp upcoming">vs Argentina</div></div>
+      </div>
+      <div class="path-note">Never won comfortably - three of their last four knockout games needed a late or extra-time winner. Bellingham has scored the decisive goal in back-to-back rounds.</div>
+    </div>
+
+  </div>
+
+  <div class="sec">Methodology</div>
+  <div class="methodology">
+    Each matchup uses a <b>blended head-to-head Poisson model</b>: a team's expected goals in a specific game
+    is the average of its own attack rate (xG scored/game) and the opponent's defensive weakness (xG conceded/game).
+    A draw is resolved as a coin flip (extra time / penalties). Each matchup is simulated 10,000 times.<br><br>
+    <b>Champion probability</b> = P(win Semi Final) × P(win the Final | reaching it) - the Final term is
+    weighted across both possible opponents by their own chance of getting there.<br><br>
+    France's, Spain's, Argentina's and England's <b>xG-scored</b> and <b>xG-conceded</b> rates are now both
+    computed directly from their exact match-by-match figures across the tournament (6 matches each, 48 data
+    points total). No tournament-level estimates remain in this model - every rate is sourced from actual
+    match data. Last updated July 12, 2026.
+  </div>
+
+</div>
+</body>
+</html>
