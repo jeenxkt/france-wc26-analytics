@@ -1,6 +1,6 @@
 France WC 2026 (Data Analytics Dashboard)
 
-A live-updated data analytics project tracking France's performance at the **FIFA World Cup 2026**, built as a portfolio project combining Python data analysis with fully custom HTML dashboards rendered inside Jupyter Notebook.
+A data analytics project tracking France's full run at the **FIFA World Cup 2026**, from the group stage through their eventual 4th-place finish - built as a portfolio project combining Python data analysis with fully custom HTML dashboards rendered inside Jupyter Notebook.
 
 
 
@@ -12,6 +12,7 @@ A live-updated data analytics project tracking France's performance at the **FIF
 - **Player contributions** - goals and assists for key players;
 - **Monte Carlo tournament simulation** - 10,000 iterations using `numpy.random.poisson`, with a full head-to-head model built entirely from match-by-match xG data (no tournament-level estimates) for all 4 remaining semifinalists;
 - **Champion Predictor dashboard** - a dedicated bracket-wide view: semifinal odds, a "Path to the Final" timeline for all 4 teams, and the full Champion probability breakdown;
+- **Final Recap dashboard** - the full campaign story: every result, the two individual World Cup records broken along the way, and a breakdown of the wild 6-4 third-place match;
 - **Custom HTML dashboards** - fully designed and rendered inside Jupyter Notebook using `IPython.display`;
 
 
@@ -19,58 +20,45 @@ A live-updated data analytics project tracking France's performance at the **FIF
 
 | File | Description |
 |---|---|
-| `france_analysis.ipynb` | Main Jupyter Notebook — full analysis pipeline and both dashboards |
+| `france_analysis.ipynb` | Main Jupyter Notebook - full analysis pipeline and dashboards |
 | `dashboard.html` | Standalone HTML version of France's match-by-match dashboard |
 | `champion_predictor.html` | Standalone HTML version of the tournament-wide Champion Predictor |
+| `final_recap.html` | Full campaign recap - final result, records broken, third-place match breakdown |
 | `fff_crest.jpg` | FFF badge used as visual asset in the hero section |
 | `README.md` | Project documentation |
 
-![France WC26 Dashboard preview](dashboard_preview.png)
+![France Dashboard preview](dashboard_preview.png)
+![Champion Predictor preview](champion_predictor_preview.png)
+![Final Recap preview](final_recap_preview.png)
 
 
-  Current status
+  Final result
 
-**Quarter Final complete - 6 matches, 6 victories**
+**France finish 4th - 6 wins, 2 losses in 8 matches**
 
-| Match | Result | xG | xG conceded |
-|---|---|---|---|
-| vs Senegal | 3-1 | 1.79 | 0.53 |
-| vs Iraq | 3-0 | 2.67 | 0.63 |
-| vs Norway | 4-1 | 1.50 | 1.70 |
-| vs Sweden | 3-0 | 3.24 | 0.70 |
-| vs Paraguay | 1-0 | 1.45 | 0.13 |
-| vs Morocco | 2-0 | 3.69 | 0.14 |
+| Match | Result |
+|---|---|
+| vs Senegal | 3-1 |
+| vs Iraq | 3-0 |
+| vs Norway | 4-1 |
+| vs Sweden | 3-0 |
+| vs Paraguay | 1-0 |
+| vs Morocco | 2-0 |
+| **Semi Final** vs Spain | 0-2 |
+| **3rd Place** vs England | 4-6 |
 
-**Key stats:** 16 goals scored - 2 conceded - 58.5% avg possession - 89% pass accuracy - 14.34 total xG
-
-
-  Champion Predictor - all 4 semifinalists confirmed
-
-![Champion Predictor dashboard preview](champion_predictor_preview.png)
-
-Every rate below is computed directly from exact match-by-match xG (48 data points across the 4 teams - no tournament-level estimates remain):
-
-| Team | xG scored/game | xG conceded/game | Semi Final | Champion probability |
-|---|---|---|---|---|
-| **France** | 2.39 | 0.64 | vs Spain: **51.1%** | **28.1%** |
-| **Spain** | 1.95 | 0.31 | vs France: 48.9% | 26.3% |
-| **Argentina** | 2.13 | 0.57 | vs England: **56.2%** | 27.2% |
-| **England** | 1.82 | 0.81 | vs Argentina: 43.8% | 18.4% |
-
-France remain the narrow favourites, but with all four teams' defenses now precisely measured, this is a genuine three-way race at the top (France/Argentina/Spain are within 2 points of each other) - not the near-lock the early "average opponent" model (71.1%) implied.
-
-Full breakdown, per-match xG, and the "Path to the Final" for each team: see `champion_predictor.html`.
+Spain, who beat France in the Semi Final, went on to win the tournament outright - 1-0 over Argentina in extra time. The model gave France 51.1% to win that Semi Final: essentially a coin flip that landed the other way, not a wrong prediction. Of the four semifinalists, France's underlying numbers (attack, defense, finishing) were the most complete top to bottom.
 
 
-  Key players
+  Two records broken
 
-| Player | Position | Goals | Assists | Notable |
-|---|---|---|---|---|
-| Mbappé | Centre Forward | 8 | 3 | France all-time top scorer - 60 goals; assisted Dembélé's goal vs Morocco |
-| Dembélé | Centre Forward | 5 | 2 | Fastest WC hat-trick by a Frenchman - 32 min; scored the QF opener vs Morocco |
-| Olise | Right Winger | 0 | 5 | Most assists at a single WC since Häßler 1994 |
-| Barcola | Left Winger | 2 | 1 | Youngest starter in the group stage |
-| Doué | Right Winger | 1 | 0 | Youngest player in the squad |
+- **Kylian Mbappe** - the all-time top scorer in World Cup history (22 goals across three tournaments), and the first ever footballer to win back-to-back Golden Boots (2022, 2026). Closes the 25/26 season as the top scorer across three competitions at once: 25 in La Liga, 15 in the Champions League, 10 at the World Cup.
+- **Michael Olise** - broke the single-tournament assist record (7), previously held by Pele since 1970 - in his first ever World Cup, without scoring a single goal himself. Ends the season as the top assist provider across three competitions: 19 in the Bundesliga, 6 in the Champions League, 7 at the World Cup.
+
+
+  The third-place match
+
+England beat France 6-4 in Miami - the most goals scored in a World Cup match since 1982. England led 4-0 at half-time; France won the second half 4-2. Mbappe's 66th-minute goal was the one that made him the all-time World Cup scoring record holder.
 
 
   Tools & libraries
@@ -82,9 +70,7 @@ Python · pandas · numpy · matplotlib · seaborn · IPython.display · HTML/CS
 
   Last updated
 
-**July 12, 2026** - after all 4 semifinalists were confirmed (France, Spain, Argentina, England)
-
-*Dashboard updated after every France match throughout the tournament.*
+**July 26, 2026** - full tournament complete, including the Final (Spain 1-0 Argentina, aet)
 
 ---
 
