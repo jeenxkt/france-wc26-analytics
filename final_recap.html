@@ -3,55 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <title>France at the 2026 World Cup - Final Recap</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
 .db{
   font-family:'Inter',sans-serif;
   background:#071428;
-  padding:28px;border-radius:6px;max-width:1180px;margin:0 auto;
-  border:1px solid #1a3260;
+  padding:20px;border-radius:16px;max-width:1200px;margin:0 auto;
 }
 .mono{font-family:'Bebas Neue',sans-serif}
 
-/* HUD FRAME - corner brackets on every panel */
-.frame{position:relative;background:rgba(237,41,57,.03);border:1px solid #1a3260}
-.frame::before,.frame::after,.frame .c3,.frame .c4{content:'';position:absolute;width:12px;height:12px;pointer-events:none}
-.frame::before{top:-1px;left:-1px;border-top:2px solid #ED2939;border-left:2px solid #ED2939}
-.frame::after{top:-1px;right:-1px;border-top:2px solid #ED2939;border-right:2px solid #ED2939}
-.frame .c3{bottom:-1px;left:-1px;border-bottom:2px solid #ED2939;border-left:2px solid #ED2939}
-.frame .c4{bottom:-1px;right:-1px;border-bottom:2px solid #ED2939;border-right:2px solid #ED2939}
+/* PANELS - rounded cards, matching dashboard.html / champion_predictor.html */
+.frame{background:#0d1f3c;border:1px solid #1a3260;border-radius:14px}
 
 /* HERO */
-.hero{padding:22px 26px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
-.hero-l .tag{font-family:'Bebas Neue',sans-serif;font-size:11px;font-weight:700;color:#ED2939;letter-spacing:3px;text-transform:uppercase}
-.hero-l .title{font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:46px;color:#fff;letter-spacing:2px;line-height:1;margin-top:6px}
-.hero-l .sub{font-size:11.5px;color:#5c7080;margin-top:8px;letter-spacing:.3px}
-.hero-r{display:flex;gap:0}
+.hero{border-radius:14px;padding:32px 36px;margin-bottom:22px;position:relative;overflow:hidden;background:#0a1e45;display:flex;align-items:center;justify-content:space-between}
+.hero-glow{position:absolute;top:-100px;left:15%;width:500px;height:300px;background:#ED2939;border-radius:50%;opacity:.15;filter:blur(70px);pointer-events:none}
+.hero-stripe{position:absolute;top:0;left:0;bottom:0;width:5px;background:linear-gradient(180deg,#002395 33%,#fff 33% 66%,#ED2939 66%)}
+.hero-l{position:relative}
+.hero-l .tag{font-size:10px;font-weight:700;color:#4a7fd4;letter-spacing:2.5px;text-transform:uppercase}
+.hero-l .title{font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:52px;color:#fff;letter-spacing:2px;line-height:1;margin-top:8px}
+.hero-l .sub{font-size:12px;color:#6a8fc0;margin-top:10px;letter-spacing:.3px}
+.hero-r{position:relative;display:flex;gap:0}
 .hero-stat{text-align:center;padding:0 20px;border-left:1px solid #1a3260}
 .hero-stat .n{font-family:'Bebas Neue',sans-serif;font-size:30px;font-weight:700;color:#ED2939}
-.hero-stat .l{font-size:8.5px;color:#5c7080;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
-.scan-bar{height:2px;background:linear-gradient(90deg,transparent,#ED2939,transparent);margin-bottom:24px;opacity:.5}
+.hero-stat .l{font-size:8.5px;color:#6a8fc0;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.scan-bar{display:none}
 
-.sec{font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:3px;text-transform:uppercase;margin:30px 0 14px;display:flex;align-items:center;gap:10px}
-.sec::before{content:'//';color:#ED2939}
-.sec::after{content:'';flex:1;height:1px;background:#1a3260}
+.sec{font-size:13px;font-weight:900;color:#6ab0ff;letter-spacing:2.5px;text-transform:uppercase;margin:32px 0 14px;display:flex;align-items:center;gap:10px;text-shadow:0 0 14px rgba(106,176,255,.35)}
+.sec::before{content:'//';color:#ED2939;font-weight:900;text-shadow:none}
+.sec::after{content:'';flex:1;height:1px;background:#ffffff08}
 
 /* JOURNEY */
-.journey{display:flex;padding:18px 20px}
+.journey{display:flex;padding:20px}
 .j-stage{flex:1;text-align:center;position:relative}
-.j-stage:not(:last-child)::after{content:'';position:absolute;top:15px;left:50%;width:100%;height:1px;background:#1a3260}
-.j-node{position:relative;z-index:2;width:30px;height:30px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;background:#071428;border:1.5px solid #ED2939;color:#ED2939;font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:12px}
+.j-stage:not(:last-child)::after{content:'';position:absolute;top:17px;left:50%;width:100%;height:2px;background:#16294d;z-index:1}
+.j-node{position:relative;z-index:2;width:34px;height:34px;border-radius:50%;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;background:#071428;border:2px solid #ED2939;color:#ED2939;font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:11px}
 .j-node.loss{border-color:#475569;color:#475569}
 .j-score{font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:13px;color:#fff}
-.j-opp{font-size:8.5px;color:#5c7080;margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+.j-opp{font-size:8.5px;color:#6a8fc0;margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
 
 /* PLAYER SPOTLIGHT (radar) */
 .spotlight{display:grid;grid-template-columns:1fr 280px;gap:0}
 .h2h{padding:22px 26px}
 .h2h-row{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:12px;margin-bottom:14px}
-.h2h-bar{height:16px;background:#0d1420;border:1px solid #16294d;border-radius:3px;overflow:hidden;position:relative}
+.h2h-bar{height:16px;background:#071428;border:1px solid #16294d;border-radius:3px;overflow:hidden;position:relative}
 .h2h-fill{height:100%;position:absolute;top:0}
 .h2h-fill.mb{background:#ED2939;right:0}
 .h2h-fill.ol{background:#7fb4ff;left:0}
@@ -66,33 +63,33 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
 
 /* CLEAN STAT TILES - no charts, just numbers */
 .stat-tiles{display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid #16294d}
-.stat-tile{flex:1;text-align:center;background:#0d1420;border:1px solid #16294d;border-radius:6px;padding:10px 4px}
+.stat-tile{flex:1;text-align:center;background:#071428;border:1px solid #16294d;border-radius:8px;padding:10px 4px}
 .stat-tile .n{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#ED2939;line-height:1}
-.stat-tile .l{font-size:8.5px;color:#5c7080;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.stat-tile .l{font-size:8.5px;color:#6a8fc0;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .spot-info{padding:22px 26px;border-right:1px solid #1a3260;display:flex;flex-direction:column;justify-content:center;gap:14px}
 .spot-name{font-family:'Bebas Neue',sans-serif;font-size:30px;font-weight:700;color:#fff;letter-spacing:1px}
 .spot-role{font-size:10.5px;color:#ED2939;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
-.spot-desc{font-size:11.5px;color:#8494a5;line-height:1.7;margin-top:14px;max-width:520px}
-.spot-desc b{color:#e2e8f0}
-.stars{margin-top:14px;font-size:10px;color:#5c7080;letter-spacing:1px}
+.spot-desc{font-size:11.5px;color:#c8d4e8;line-height:1.7;margin-top:14px;max-width:520px}
+.spot-desc b{color:#fff}
+.stars{margin-top:14px;font-size:10px;color:#6a8fc0;letter-spacing:1px}
 .stars .on{color:#ED2939}
 .spot-radar{padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
 .stat-bars{width:100%;padding:18px 26px;display:flex;flex-direction:column;gap:13px}
 .sb-row{display:grid;grid-template-columns:70px 1fr 34px;align-items:center;gap:10px}
 .sb-label{font-size:10px;color:#8494a5;text-transform:uppercase;letter-spacing:.5px;text-align:right}
-.sb-track{background:#0d1420;border:1px solid #16294d;border-radius:3px;height:12px;overflow:hidden}
+.sb-track{background:#071428;border:1px solid #16294d;border-radius:3px;height:12px;overflow:hidden}
 .sb-fill{height:100%;background:#ED2939;border-radius:2px}
 .sb-val{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff}
 
-/* SQUAD */
-.squad{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:#1a3260}
-.sq-card{background:#071428;padding:16px 10px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:4px}
-.sq-card.key{background:rgba(237,41,57,.05)}
-.sq-name{font-family:'Bebas Neue',sans-serif;font-size:15px;font-weight:700;color:#fff}
+/* SQUAD - rounded cards with gaps, matching team-card grid pattern */
+.squad{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;background:none;border:none;padding:0}
+.sq-card{background:#0d1f3c;border:1px solid #1a3260;border-top:3px solid #1a3260;border-radius:12px;padding:16px 10px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.sq-card.key{background:#0d1f3c;border-top-color:#ED2939}
+.sq-name{font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:.5px}
 .sq-num{font-family:'Bebas Neue',sans-serif;font-size:11px;color:#ED2939;font-weight:700}
-.sq-pos{font-size:8.5px;color:#5c7080;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.sq-pos{font-size:8.5px;color:#6a8fc0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .sq-vals{display:flex;justify-content:center;gap:6px}
-.sq-pill{background:#0d1f3c;border:1px solid #1a3260;padding:5px 10px;font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:700;color:#ED2939}
+.sq-pill{background:#071428;border:1px solid #1a3260;padding:5px 10px;font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:700;color:#ED2939}
 .sq-pill span{color:#475569;font-size:10.5px;font-weight:400;margin-left:2px}
 .sq-flag{font-size:7px;color:#ED2939;letter-spacing:.5px;margin-top:8px;font-weight:700}
 
@@ -100,17 +97,17 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
 .match{padding:22px 26px}
 .match-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
 .match-score{font-family:'Bebas Neue',sans-serif;font-size:32px;font-weight:700;color:#fff}
-.match-meta{font-size:10px;color:#5c7080;text-transform:uppercase;letter-spacing:.5px}
-.halves{display:flex;gap:1px;background:#1a3260;margin:16px 0}
-.half{flex:1;background:#071428;padding:10px 14px;text-align:center}
-.half-lbl{font-size:8.5px;color:#5c7080;text-transform:uppercase;letter-spacing:1px}
+.match-meta{font-size:10px;color:#6a8fc0;text-transform:uppercase;letter-spacing:.5px}
+.halves{display:flex;gap:12px;margin:16px 0}
+.half{flex:1;background:#071428;border:1px solid #16294d;border-radius:8px;padding:10px 14px;text-align:center}
+.half-lbl{font-size:8.5px;color:#6a8fc0;text-transform:uppercase;letter-spacing:1px}
 .half-sc{font-family:'Bebas Neue',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-top:3px}
 .gl{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
-.gl-h{font-size:8.5px;color:#5c7080;text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px;grid-column:1/-1}
+.gl-h{font-size:8.5px;color:#6a8fc0;text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px;grid-column:1/-1}
 .g-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;border-top:1px solid #16294d}
 .g-row:nth-child(-n+2){border-top:none}
 
-/* NEW TIMELINE LOG */
+/* TIMELINE LOG */
 .tlog{margin-top:16px}
 .tl-row{display:grid;grid-template-columns:50px 3px 1fr 60px;align-items:center;gap:14px;padding:9px 0;border-top:1px solid #16294d;position:relative}
 .tl-row:first-child{border-top:none}
@@ -122,36 +119,37 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
 .chip.eng{background:#3d7fe0;box-shadow:0 0 0 3px rgba(61,127,224,.15)}
 .chip.fra{background:#ED2939;box-shadow:0 0 0 3px rgba(237,41,57,.15)}
 .chip.rec{width:13px;height:13px;box-shadow:0 0 10px rgba(237,41,57,.7)}
-.chip-min{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue',sans-serif;font-size:11px;color:#5c7080;white-space:nowrap}
+.chip-min{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue',sans-serif;font-size:11px;color:#6a8fc0;white-space:nowrap}
 .chip-name{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:#fff;white-space:nowrap}
 .chip-name.eng-t{color:#7fb4ff}
 .chip-name.fra-t{color:#ff8a94}
 .chip-sc{position:absolute;bottom:-38px;left:50%;transform:translateX(-50%);font-size:8px;color:#3a5a8a;white-space:nowrap}
-.tl-min{font-family:'Bebas Neue',sans-serif;font-size:17px;color:#5c7080;text-align:right}
+.tl-min{font-family:'Bebas Neue',sans-serif;font-size:17px;color:#6a8fc0;text-align:right}
 .tl-bar{align-self:stretch;border-radius:2px}
 .tl-bar.eng{background:#3d7fe0}
 .tl-bar.fra{background:#ED2939}
 .tl-mid{display:flex;align-items:baseline;gap:8px}
 .tl-name{font-weight:800;font-size:13px;color:#fff}
 .tl-name.rec{color:#ED2939}
-.tl-tag{font-size:8.5px;color:#5c7080;letter-spacing:.5px}
-.tl-assist{font-size:10.5px;color:#5c7080}
-.tl-assist b{color:#8494a5}
+.tl-tag{font-size:8.5px;color:#6a8fc0;letter-spacing:.5px}
+.tl-assist{font-size:10.5px;color:#6a8fc0}
+.tl-assist b{color:#c8d4e8}
 .tl-score{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;text-align:right}
-.tl-score span{color:#5c7080;font-size:10px;margin-left:3px}
-.g-t{width:32px;color:#475569;font-family:'Bebas Neue',sans-serif}
-.g-n{font-weight:600;color:#e2e8f0}
-.g-a{color:#5c7080;font-size:9.5px}
+.tl-score span{color:#6a8fc0;font-size:10px;margin-left:3px}
+.g-t{width:32px;color:#6a8fc0;font-family:'Bebas Neue',sans-serif}
+.g-n{font-weight:600;color:#c8d4e8}
+.g-a{color:#6a8fc0;font-size:9.5px}
 
-.closing{padding:18px 26px;font-size:11px;color:#5c7080;line-height:1.8}
+.closing{padding:18px 26px;font-size:11.5px;color:#8aa9cf;line-height:1.8}
 .closing b{color:#ED2939}
 </style>
 </head>
 <body>
 <div class="db">
 
-  <div class="hero frame"><span class="c3"></span><span class="c4"></span>
-    <div class="hero-l">
+  <div class="hero frame">
+    <div class="hero-stripe"></div>
+    <div class="hero-glow"></div>    <div class="hero-l">
       <div class="tag">FIFA World Cup 2026 :: Final Report</div>
       <div class="title">FRANCE - 4TH PLACE</div>
       <div class="sub">6W – 2L / 8 MATCHES / ELIMINATED SF vs SPAIN</div>
@@ -165,7 +163,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
   <div class="scan-bar"></div>
 
   <div class="sec">Tournament Path</div>
-  <div class="journey frame"><span class="c3"></span><span class="c4"></span>
+  <div class="journey frame">
     <div class="j-stage"><div class="j-node">W</div><div class="j-score">3-1</div><div class="j-opp">Senegal</div></div>
     <div class="j-stage"><div class="j-node">W</div><div class="j-score">3-0</div><div class="j-opp">Iraq</div></div>
     <div class="j-stage"><div class="j-node">W</div><div class="j-score">4-1</div><div class="j-opp">Norway</div></div>
@@ -177,7 +175,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
   </div>
 
   <div class="sec">Two Stars, Two Records</div>
-  <div class="spotlight frame"><span class="c3"></span><span class="c4"></span>
+  <div class="spotlight frame">
     <div class="spot-info">
       <div class="spot-name">KYLIAN MBAPPE</div>
       <div class="spot-role">Centre Forward :: #10 :: Real Madrid</div>
@@ -221,7 +219,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
   </div>
 
   
-  <div class="spotlight frame" style="margin-top:16px"><span class="c3"></span><span class="c4"></span>
+  <div class="spotlight frame" style="margin-top:16px">
     <div class="spot-info">
       <div class="spot-name">MICHAEL OLISE</div>
       <div class="spot-role">Attacking Midfielder :: #11 :: Bayern Munich</div>
@@ -265,7 +263,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
   </div>
 
   <div class="sec">Key Players</div>
-  <div class="squad frame"><span class="c3"></span><span class="c4"></span>
+  <div class="squad frame">
     <div class="sq-card key"><div class="sq-num">#10</div><div class="sq-name">MBAPPE</div><div class="sq-pos">Centre Forward</div><div class="sq-vals"><div class="sq-pill">10<span>G</span></div><div class="sq-pill">4<span>A</span></div></div><div class="sq-flag">★ ALL-TIME RECORD</div></div>
     <div class="sq-card"><div class="sq-num">#7</div><div class="sq-name">DEMBELE</div><div class="sq-pos">Right Winger</div><div class="sq-vals"><div class="sq-pill">6<span>G</span></div><div class="sq-pill">2<span>A</span></div></div><div class="sq-flag" style="visibility:hidden">·</div></div>
     <div class="sq-card key"><div class="sq-num">#11</div><div class="sq-name">OLISE</div><div class="sq-pos">Attacking Midfielder</div><div class="sq-vals"><div class="sq-pill">0<span>G</span></div><div class="sq-pill">7<span>A</span></div></div><div class="sq-flag">★ ASSIST RECORD</div></div>
@@ -274,7 +272,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
   </div>
 
   <div class="sec">Match Log - Third Place Play-Off</div>
-  <div class="match frame"><span class="c3"></span><span class="c4"></span>
+  <div class="match frame">
     <div class="match-top">
       <div class="match-score">ENGLAND 6 – 4 FRANCE</div>
       <div class="match-meta">Miami // Jul 18, 2026</div>
@@ -297,7 +295,7 @@ body{font-family:'Inter',sans-serif;background:transparent;padding:24px}
     </div>
   </div>
 
-  <div class="closing frame"><span class="c3"></span><span class="c4"></span>
+  <div class="closing frame">
     France finish the tournament in <b>4th place</b> - six wins from six, then two losses in a row: the Semi Final to Spain (0-2), and the third-place match to England (4-6). Spain went on to beat Argentina 1-0 in extra time and lift the trophy.<br><br>
     Two numbers matter here, and they answer different questions. <b>51.1%</b> was France's chance of winning that one Semi Final match - basically a coin flip. <b>28.1%</b> was their chance of winning the <i>whole tournament</i>, which meant winning two matches in a row, not one. It was the best number of any team left in the competition - but still under 50%, because winning twice back to back is always harder than winning once.<br><br>
     France had the best underlying numbers of the four semifinalists - the sharpest attack, the tightest defense, the most complete squad on paper. <b>Some teams get remembered for what they won. This one deserves to be remembered for how well it played.</b>
